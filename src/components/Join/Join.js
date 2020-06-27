@@ -18,7 +18,7 @@ const Join = () => {
             setError(true);
 
             setTimeout(()=>{
-                gsap.fromTo(errorRef.current,{opacity:0},{ duration:.8, opacity:1});
+                gsap.fromTo(errorRef.current,{opacity:0},{ duration:.5, opacity:1});
             },.2)
 
             
