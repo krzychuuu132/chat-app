@@ -1,11 +1,16 @@
 import  React,{ useEffect , useState }  from 'react';
 import  querystring from 'query-string';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+
+import Input from "../Input/Input";
+import ChatContainer from "../ChatContainer/ChatContainer";
+
+import "./Chat.scss";
 
 let socket;
 
 const Chat = ({ location }) => {
-    const ENDPOINT = 'localhost:5000';
+    const ENDPOINT = 'https://react-chat-app12.herokuapp.com/';
    
 
     const [ name,setName ] = useState('');
@@ -46,7 +51,10 @@ const Chat = ({ location }) => {
     },[messages])
 
     const sendMessage = (e) =>{
-       //e.preventDefault();
+       //
+      
+       e.preventDefault()
+
        console.log(message)
 
         if(message){
@@ -57,15 +65,10 @@ const Chat = ({ location }) => {
     console.log(message,messages)
 
     return ( 
-       <div>
-           <div>
-               <input 
-               value={message} 
-               onChange={(e)=>setMessage(e.target.value)} 
-               onKeyPress={ e => e.key === 'Enter'?sendMessage(e):null}
-             
-               
-               />
+       <div className="wrapper">
+           <div className="chat">
+               <ChatContainer room={room}/>
+               <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
            </div>
        </div>
      );

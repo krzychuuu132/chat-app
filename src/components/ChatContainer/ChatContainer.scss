@@ -1,0 +1,26 @@
+
+
+.chat__container{
+    min-height: 400px;
+    width: 350px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
+    &-back{
+        margin-top: 10px;
+        text-decoration: none;
+        padding: 5px 9px;
+        background-color: black;
+        color: white;
+        height: min-content;
+        will-change: color,background-color;
+        transition: all .4s;
+
+        &:hover{
+            background-color: white;
+            color: black;
+        }
+    }
+}
