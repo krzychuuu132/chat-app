@@ -19,16 +19,19 @@ io.on('connection', ( socket ) => {
    
 
     socket.on('join',({ name , room }, callback)=> {
+        console.log('joinn')
+
         const { error , user } = addUser({ id:socket.id , name , room });
        
         if(error) callback(error);
 
-        socket.emit('message',{user:'admin', text:`${user.name}, welcome to the room ${user.room}` });
+        socket.emit('message',{user:'admin', text:`${user.name}, welcome to the room ${user.room}!` });
         socket.broadcast.to(user.room).emit('message',{ user: 'admin', text: `${user.name},has joined!`})
 
         socket.join(user.room);
 
         callback();
+
     })
 
     socket.on('sendMessage',(message,callback)=>{
@@ -40,7 +43,12 @@ io.on('connection', ( socket ) => {
     })
 
     socket.on('disconnect',()=>{
-        console.log('User had left!')
+        const  user  = removeUser(socket.id);
+        console.log('disconnet')
+
+        if(user){
+            io.to(user.room).emit('message',{user: 'admin',text: `${user.name} had left !`})
+        }
     })
 
 

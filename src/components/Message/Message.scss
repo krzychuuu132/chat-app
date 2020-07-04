@@ -1,0 +1,40 @@
+
+
+.message{
+    min-height: 400px;
+    border: 1px solid black;
+    padding: 20px 13px;
+
+    &__element{
+        
+        
+      
+        margin: 15px 0;
+        display: flex;
+        
+
+        &--admin{
+            justify-content: flex-start;
+        }
+
+        &--user{
+            justify-content: flex-end;
+        }
+    }
+
+    &__text{
+        padding: 7px 16px;
+        background-color: white;
+        border-radius: 0px 25px 25px 25px;
+        letter-spacing: .4px;
+        font-size: 0.8rem;
+        border:1px solid black;
+
+        &--user{
+            border-radius: 25px 0px 25px 25px;
+            background-color: rgb(61, 200, 255);
+            color: white;
+            border:none;
+        }
+    }
+}

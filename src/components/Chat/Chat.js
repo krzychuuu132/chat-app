@@ -6,25 +6,29 @@ import Input from "../Input/Input";
 import ChatContainer from "../ChatContainer/ChatContainer";
 
 import "./Chat.scss";
+import Messages from '../messages/Messages';
 
 let socket;
 
 const Chat = ({ location }) => {
-    const ENDPOINT = 'https://react-chat-app12.herokuapp.com/';
    
-
-    const [ name,setName ] = useState('');
-    const [ room,setRoom ] = useState('');
+    const ENDPOINT = 'https://react-chat-app12.herokuapp.com/';
+    const  { name: user_name , room: user_room }  = querystring.parse(location.search);
+   
+//https://react-chat-app12.herokuapp.com/'
+    const [ name,setName ] = useState(user_name);
+    const [ room,setRoom ] = useState(user_room);
     const [ messages, setMessages ] = useState([]);
     const [ message, setMessage ] = useState('');
 
     useEffect(() => {
 
-        const  { name , room }  = querystring.parse(location.search);
+        
+      
 
          socket = io(ENDPOINT);
         
-        socket.emit('join', { name , room },()=>{
+        socket.emit('join', { name:user_name , room:user_room },()=>{
 
         });
 
@@ -33,6 +37,7 @@ const Chat = ({ location }) => {
 
         return () =>{
             socket.emit('disconnect');
+            
 
             socket.off();
         }
@@ -41,7 +46,7 @@ const Chat = ({ location }) => {
     useEffect( ()=> {
 
         socket.on('message', (message)=> {
-            console.log(messages+' elooo')
+          
 
             setMessages([...messages, message])
 
@@ -68,6 +73,7 @@ const Chat = ({ location }) => {
        <div className="wrapper">
            <div className="chat">
                <ChatContainer room={room}/>
+               <Messages messages={messages} name={name}/>
                <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
            </div>
        </div>
