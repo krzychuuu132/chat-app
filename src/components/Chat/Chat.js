@@ -8,6 +8,8 @@ import ChatContainer from "../ChatContainer/ChatContainer";
 import "./Chat.scss";
 import Messages from '../messages/Messages';
 
+import backgr from "../../img/backgr_1.jpg";
+
 let socket;
 
 const Chat = ({ location }) => {
@@ -20,6 +22,7 @@ const Chat = ({ location }) => {
     const [ room,setRoom ] = useState(user_room);
     const [ messages, setMessages ] = useState([]);
     const [ message, setMessage ] = useState('');
+    const [ users, setUsers ] = useState([]);
 
     useEffect(() => {
 
@@ -32,8 +35,8 @@ const Chat = ({ location }) => {
 
         });
 
-        setName(name);
-        setRoom(room);
+        setName(user_name);
+        setRoom(user_room);
 
         return () =>{
             socket.emit('disconnect');
@@ -45,10 +48,11 @@ const Chat = ({ location }) => {
 
     useEffect( ()=> {
 
-        socket.on('message', (message)=> {
+        socket.on('message', (message,users)=> {
           
 
-            setMessages([...messages, message])
+            setMessages([...messages, message]);
+            setUsers(users);
 
         })
 
@@ -60,17 +64,17 @@ const Chat = ({ location }) => {
       
        e.preventDefault()
 
-       console.log(message)
+       console.log(messages)
 
         if(message){
             socket.emit('sendMessage' , message, ()=> sendMessage(''));
         }
     }
 
-    console.log(message,messages)
+    console.log(users)
 
     return ( 
-       <div className="wrapper">
+       <div className="wrapper" style={{backgroundImage:`url(${backgr})`}}>
            <div className="chat">
                <ChatContainer room={room}/>
                <Messages messages={messages} name={name}/>

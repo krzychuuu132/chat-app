@@ -1,6 +1,8 @@
-import React,{ useState ,useRef } from 'react';
+import React,{ useState ,useRef , useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import gsap from 'gsap'
+import gsap from 'gsap';
+
+import "./Join.scss";
 
 const Join = () => {
     const history = useHistory();
@@ -9,19 +11,31 @@ const Join = () => {
     const [ room,setRoom ] = useState('');
     const [ error,setError ] = useState(false);
 
-    const errorRef = useRef(null);
+   
+    const wrapperRef = useRef(null);
+    const joinWrapperRef = useRef(null);
+    const btnRef = useRef(null);
+
+    useEffect(()=>{
+        const tl = gsap.timeline({defaults:{ease:"power3.inOut"}});
+
+        tl.fromTo(wrapperRef.current,{y:-400},{duration:.5, y:0});
+        tl.fromTo(joinWrapperRef.current.children,{x:-200,opacity:0},{duration:.5, x:0,opacity:1,stagger:.2});
+        tl.fromTo(btnRef.current,{y:200},{duration:.5, y:0});
+
+    },[]);
+
+
 
     const handleJoinClick = (e) => {
         e.preventDefault();
 
         if(!name || !room) {
             setError(true);
+           [...joinWrapperRef.current.children].forEach(element=>element.style.borderColor = "red");
+            gsap.fromTo(joinWrapperRef.current.children,{x:80},{duration:.2, x:0});
+           
 
-            setTimeout(()=>{
-                gsap.fromTo(errorRef.current,{opacity:0},{ duration:.5, opacity:1});
-            },.2)
-
-            
         }
         
         else {
@@ -32,21 +46,21 @@ const Join = () => {
     }
 
     return ( 
-        <div className="wrapper">
+        <div className="wrapper" ref={wrapperRef}>
             <div className="join">
 
                 <h1 className="join__heading">Join</h1>
 
-                <div className="join__wrapper">
-                    <input className="join__wrapper-input" type="text" onChange={(e)=>setName(e.target.value)} placeholder="Name"/>
-                    <input className="join__wrapper-input" type="text" onChange={(e)=>setRoom(e.target.value)} placeholder="Room"/>
+                <div className="join__wrapper" ref={joinWrapperRef} >
+                    <input className="join__wrapper-input" type="text" onChange={(e)=>setName(e.target.value)} placeholder="Name" />
+                    <input className="join__wrapper-input" type="text" onChange={(e)=>setRoom(e.target.value)} placeholder="Room" />
                 </div>
 
-                <button className="join__btn" type="submit" onClick={handleJoinClick}>Sign In</button>
+                <button className="join__btn" type="submit" onClick={handleJoinClick} ref={btnRef}>Sign In</button>
 
             </div>
 
-            {error?<h1 onLoad={()=>console.log('eloo')} ref={errorRef}>Uzupełnij dane!!!!</h1>:null}
+         
 
         </div>
      );

@@ -1,40 +1,86 @@
+$border-color: rgba(223, 223, 223, 0.226);
 
+@mixin user_picture {
+    content: "";
+    display: block;
+    width:40px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: white;
+    margin-right: 10px;
+}
+
+@mixin border_space {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 92%;
+    height: 1px;
+    background-color: $border-color;
+    transform: translateX(-50%);
+}
 
 .message{
     min-height: 400px;
-    border: 1px solid black;
     padding: 20px 13px;
+ 
 
     &__element{
-        
-        
-      
         margin: 15px 0;
         display: flex;
+        align-items: center;
+       
         
 
         &--admin{
             justify-content: flex-start;
+
+            &::before{
+                @include user_picture();
+            }
         }
 
         &--user{
             justify-content: flex-end;
+
+            &::after{
+                @include user_picture();
+                margin-right: 0;
+                margin-left: 10px;
+            }
         }
+
+        
     }
 
     &__text{
+        width: 250px;
         padding: 7px 16px;
-        background-color: white;
-        border-radius: 0px 25px 25px 25px;
+        background-color: rgb(105, 105, 105);
+        border-radius: 10px 10px 10px 0px;
         letter-spacing: .4px;
         font-size: 0.8rem;
         border:1px solid black;
+        word-break: break-all;
+
+       
+        
 
         &--user{
-            border-radius: 25px 0px 25px 25px;
-            background-color: rgb(61, 200, 255);
+            border-radius: 10px 10px 0px 10px;
+            background-color: #101010;
             color: white;
             border:none;
         }
+    }
+
+    &::before{
+       @include border_space();
+       top: 0;
+    }
+
+    &::after{
+        @include border_space();
+        bottom: 0;
     }
 }

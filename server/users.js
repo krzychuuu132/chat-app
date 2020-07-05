@@ -1,6 +1,6 @@
 
 
-const users = [];
+export const users = [];
 
 
 const addUser = ({  id, name, room }) => {
