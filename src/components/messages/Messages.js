@@ -7,13 +7,14 @@ import "./Messages.scss";
 
 
 const Messages = ({messages,name}) => {
+    
     return ( 
-        <ScrollToBottom>
-                <div className="message">
+        <ScrollToBottom className="message">
+          
             {
                 messages.map((message,index)=> <div key={index}> <Message message={message} name={name}/> </div> )
             }
-                </div>
+                
         </ScrollToBottom>
      );
 }

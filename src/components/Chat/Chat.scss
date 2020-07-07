@@ -23,16 +23,22 @@
    
 
     &__data{
-
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 40px;
+        flex-wrap: wrap;
         &-info{
         letter-spacing: .3px;
         font-size: 0.9rem;
         color:  rgb(124, 124, 124);
+        padding: 5px;
 
       
 
         &:nth-of-type(1){
-            margin-right: 20px;
+            //margin-right: 20px;
     }
     
 

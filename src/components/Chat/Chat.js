@@ -4,11 +4,13 @@ import io from 'socket.io-client';
 
 import Input from "../Input/Input";
 import ChatContainer from "../ChatContainer/ChatContainer";
+import { changeSource } from "../Join/Join";
 
 import "./Chat.scss";
 import Messages from '../messages/Messages';
 
 import backgr from "../../img/backgr_1.jpg";
+
 
 let socket;
 
@@ -20,18 +22,19 @@ const Chat = ({ location }) => {
 //https://react-chat-app12.herokuapp.com/'
     const [ name,setName ] = useState(user_name);
     const [ room,setRoom ] = useState(user_room);
+    const [ src,setSrc ] = useState('');
     const [ messages, setMessages ] = useState([]);
     const [ message, setMessage ] = useState('');
-    const [ users, setUsers ] = useState([]);
+    const [ usersInRoom, setUsersInRoom ] = useState([]);
 
     useEffect(() => {
 
         
-      
+        const userPicture = localStorage.getItem('userPicture')
 
          socket = io(ENDPOINT);
         
-        socket.emit('join', { name:user_name , room:user_room },()=>{
+        socket.emit('join', { name:user_name , room:user_room , src: userPicture },()=>{
 
         });
 
@@ -52,31 +55,42 @@ const Chat = ({ location }) => {
           
 
             setMessages([...messages, message]);
-            setUsers(users);
+          
 
         })
 
 
     },[messages])
 
+    useEffect(()=>{
+       
+
+        socket.on('getRoomData',({users})=>{
+            setUsersInRoom(users);
+        })
+
+    }
+    ,[usersInRoom])
+
     const sendMessage = (e) =>{
        //
       
        e.preventDefault()
 
-       console.log(messages)
+   
 
         if(message){
             socket.emit('sendMessage' , message, ()=> sendMessage(''));
         }
     }
 
-    console.log(users)
+        
+
 
     return ( 
        <div className="wrapper" style={{backgroundImage:`url(${backgr})`}}>
            <div className="chat">
-               <ChatContainer room={room}/>
+               <ChatContainer room={room} usersInRoom={usersInRoom} name={name}/>
                <Messages messages={messages} name={name}/>
                <Input message={message} setMessage={setMessage} sendMessage={sendMessage} />
            </div>

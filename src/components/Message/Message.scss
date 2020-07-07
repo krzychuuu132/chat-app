@@ -1,14 +1,6 @@
 $border-color: rgba(223, 223, 223, 0.226);
 
-@mixin user_picture {
-    content: "";
-    display: block;
-    width:40px;
-    height: 40px;
-    border-radius: 50px;
-    background-color: white;
-    margin-right: 10px;
-}
+
 
 @mixin border_space {
     content: "";
@@ -29,22 +21,38 @@ $border-color: rgba(223, 223, 223, 0.226);
         margin: 15px 0;
         display: flex;
         align-items: center;
+
+        &-img{
+            display: block;
+            width:40px;
+            height: 40px;
+            border-radius: 50px;
+            background-color: white;
+            margin-right: 10px;
+
+            &--admin{
+                width: 35px;
+                height: 35px;
+                background-color: transparent;
+               
+            }
+        }
        
         
 
         &--admin{
             justify-content: flex-start;
-
-            &::before{
-                @include user_picture();
-            }
+           
+           
+               
+            
         }
 
         &--user{
             justify-content: flex-end;
 
             &::after{
-                @include user_picture();
+                
                 margin-right: 0;
                 margin-left: 10px;
             }
@@ -62,6 +70,7 @@ $border-color: rgba(223, 223, 223, 0.226);
         font-size: 0.8rem;
         border:1px solid black;
         word-break: break-all;
+        position: relative;
 
        
         
@@ -72,6 +81,16 @@ $border-color: rgba(223, 223, 223, 0.226);
             color: white;
             border:none;
         }
+
+        &-user_name{
+            position: absolute;
+            bottom: 0;
+            right: 5%;
+            color: #929292;
+            transform: translateY(19px);
+        }
+
+       
     }
 
     &::before{

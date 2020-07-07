@@ -1,10 +1,10 @@
 
 
-export const users = [];
+const users = [];
 
 
-const addUser = ({  id, name, room }) => {
-    console.log('siemaaaaaaaaaaaaaaaa')
+const addUser = ({  id, name, room, src }) => {
+  
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();
 
@@ -16,7 +16,7 @@ const addUser = ({  id, name, room }) => {
         return {error: 'Username is taken :('}
     }
 
-    const user = { id, name, room };
+    const user = { id, name, room ,src};
 
     users.push(user);
 
@@ -42,6 +42,15 @@ const getUser = (id) => users.find(user=> user.id === id);
 
 const getUserInRoom = (room) => users.filter(user=> user.room === room);
 
+const setUserSrc = (src,id) => {
+    users.filter(user=> {
+        if(user.id === id) user.src = src;
+    })
+        
+  
+}
+
+
 
 
 
@@ -50,5 +59,6 @@ module.exports = {
     addUser,
     removeUser,
     getUser,
-    getUserInRoom
+    getUserInRoom,
+    setUserSrc
 }
