@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 
 import Input from "../Input/Input";
 import ChatContainer from "../ChatContainer/ChatContainer";
-import { changeSource } from "../Join/Join";
+
 
 import "./Chat.scss";
 import Messages from '../messages/Messages';
@@ -17,24 +17,21 @@ let socket;
 const Chat = ({ location }) => {
    
     const ENDPOINT = 'https://react-chat-app12.herokuapp.com/';
+
     const  { name: user_name , room: user_room }  = querystring.parse(location.search);
    
 //https://react-chat-app12.herokuapp.com/'
     const [ name,setName ] = useState(user_name);
     const [ room,setRoom ] = useState(user_room);
-    const [ src,setSrc ] = useState('');
     const [ messages, setMessages ] = useState([]);
     const [ message, setMessage ] = useState('');
     const [ usersInRoom, setUsersInRoom ] = useState([]);
 
     useEffect(() => {
 
+        socket = io(ENDPOINT);
         
-        const userPicture = localStorage.getItem('userPicture')
-
-         socket = io(ENDPOINT);
-        
-        socket.emit('join', { name:user_name , room:user_room , src: userPicture },()=>{
+        socket.emit('join', { name:user_name , room:user_room  },()=>{
 
         });
 
@@ -47,11 +44,12 @@ const Chat = ({ location }) => {
 
             socket.off();
         }
-    },[ENDPOINT,location.search])
+    },[ENDPOINT,location.search]);
+
 
     useEffect( ()=> {
 
-        socket.on('message', (message,users)=> {
+        socket.on('message', (message)=> {
           
 
             setMessages([...messages, message]);
@@ -73,11 +71,7 @@ const Chat = ({ location }) => {
     ,[usersInRoom])
 
     const sendMessage = (e) =>{
-       //
-      
        e.preventDefault()
-
-   
 
         if(message){
             socket.emit('sendMessage' , message, ()=> sendMessage(''));

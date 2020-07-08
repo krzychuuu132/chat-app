@@ -18,10 +18,10 @@ const io = socketio(server);
     io.on('connection', ( socket ) => {
    
 
-        socket.on('join',({ name , room, src }, callback)=> {
+        socket.on('join',({ name , room }, callback)=> {
       
       
-        const { error , user } = addUser({ id:socket.id , name , room , src});
+        const { error , user } = addUser({ id:socket.id , name , room });
         
       
        
@@ -47,7 +47,7 @@ const io = socketio(server);
         const user = getUser(socket.id);
      
        
-        io.to(user.room).emit('message',{ user: user.name ,text : message, src: user.src});
+        io.to(user.room).emit('message',{ user: user.name ,text : message});
 
         
         const users_in_room = getUserInRoom(user.room);
