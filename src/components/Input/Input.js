@@ -16,7 +16,7 @@ const Input = ( { message , setMessage  , sendMessage} ) => {
                     placeholder="Type something..."
                 />
 
-               <button type="submit" onClick={(e)=>sendMessage(e)}  className="form__btn"><span className="far fa-paper-plane form__btn-icon"></span></button>
+               <button type="submit" onClick={sendMessage}  className="form__btn"><span className="far fa-paper-plane form__btn-icon"></span></button>
               
               </form>
      );

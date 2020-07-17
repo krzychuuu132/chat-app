@@ -1,12 +1,13 @@
 import React,{ useState } from "react";
 import ReactEmoji from "react-emoji";
+import moment from 'moment';
 
 import "./Message.scss";
 import adminPicture from "../../img/admin.png";
 import User from "../../img/user.png";
 
 
-const Message = ({message:{ user,text},name}) => {
+const Message = ({message:{ user,text},name,time}) => {
     let currentUser = false;
 
     const modifyName = name.trim().toLowerCase();
@@ -17,12 +18,12 @@ const Message = ({message:{ user,text},name}) => {
     
 
     const insertSentDate = () => {
-        const date = new Date();
+        const date = new Date(time);
 
         return date.toLocaleTimeString()
     }
 
-    const userPicture = localStorage.getItem('userPicture');
+    
     
     
 
@@ -31,7 +32,7 @@ const Message = ({message:{ user,text},name}) => {
 
         <div className="message__element message__element--user">
 
-                    <img src={userPicture} alt="userPicture" className="message__element-img"/>
+                    <img src={User} alt="userPicture" className="message__element-img"/>
                     <p className="message__text message__text--user">{ReactEmoji.emojify(text)}<span className="message__text-user_name">Sent at {insertSentDate()} From {user}</span></p>
                     
 

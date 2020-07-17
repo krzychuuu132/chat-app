@@ -17,7 +17,7 @@ let socket;
 const Chat = ({ location }) => {
    
     const ENDPOINT = 'https://react-chat-app12.herokuapp.com/';
-
+//
     const  { name: user_name , room: user_room }  = querystring.parse(location.search);
    
 //https://react-chat-app12.herokuapp.com/'
@@ -71,18 +71,19 @@ const Chat = ({ location }) => {
     ,[usersInRoom])
 
     const sendMessage = (e) =>{
-       e.preventDefault()
+        e.preventDefault();
+      
 
         if(message){
-            socket.emit('sendMessage' , message, ()=> sendMessage(''));
+            socket.emit('sendMessage' , message, () => setMessage(''));
         }
     }
 
         
-
+    console.log(messages)
 
     return ( 
-       <div className="wrapper" style={{backgroundImage:`url(${backgr})`}}>
+       <div className="wrapper" >
            <div className="chat">
                <ChatContainer room={room} usersInRoom={usersInRoom} name={name}/>
                <Messages messages={messages} name={name}/>

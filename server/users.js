@@ -16,7 +16,7 @@ const addUser = ({  id, name, room }) => {
         return {error: 'Username is taken :('}
     }
 
-    const user = { id, name, room };
+    const user = { id, name, room,time:'' };
 
     users.push(user);
 
@@ -38,7 +38,14 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find(user=> user.id === id);
 
+const setMessageTime = () =>{
+    const date = new Date();
+    
+  
 
+    return date; 
+    
+}
 
 const getUserInRoom = (room) => users.filter(user=> user.room === room);
 
@@ -53,6 +60,7 @@ module.exports = {
     addUser,
     removeUser,
     getUser,
-    getUserInRoom
+    getUserInRoom,
+    setMessageTime
   
 }
