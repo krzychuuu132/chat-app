@@ -1,11 +1,11 @@
-import React,{ useState } from "react";
+import React from "react";
 import ReactEmoji from "react-emoji";
-import moment from 'moment';
+
 
 import "./Message.scss";
 import adminPicture from "../../img/admin.png";
 import User from "../../img/user.png";
-
+import owner from '../../img/owner.png';
 
 const Message = ({message:{ user,text},name,time}) => {
     let currentUser = false;
@@ -43,7 +43,7 @@ const Message = ({message:{ user,text},name,time}) => {
         
         <div className="message__element message__element--admin">
 
-                    <img src={user!=='admin'?User:adminPicture} alt="userPicture" className="message__element-img message__element-img--admin" style={user!=='admin'?{backgroundColor:"white",border:"1px solid white"}:null}/>
+                    <img src={user!=='admin'?owner:adminPicture} alt="userPicture" className="message__element-img message__element-img--admin" style={user!=='admin'?{backgroundColor:"white",border:"1px solid white"}:null}/>
                     <p className="message__text">{ReactEmoji.emojify(text)}<span className="message__text-user_name">Sent at {insertSentDate()} From {user}</span></p>
 
         </div>
